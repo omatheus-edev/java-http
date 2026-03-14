@@ -14,6 +14,10 @@ public interface HttpHeaders {
         return new HttpHeadersImpl().add(key, value);
     }
 
+    static @NotNull HttpHeaders newHeaders(@NotNull String key, @NotNull String @NotNull ... values) {
+        return new HttpHeadersImpl().add(key, values);
+    }
+
     @NotNull HttpHeaders add(@NotNull String key, @NotNull String value);
 
     @NotNull HttpHeaders add(@NotNull String key, @NotNull String @NotNull ... values);
@@ -24,6 +28,8 @@ public interface HttpHeaders {
 
     @NotNull HttpHeaders set(@NotNull String key, @NotNull String value);
 
+    @NotNull HttpHeaders set(@NotNull String key, @NotNull String @NotNull ... values);
+
     @NotNull Optional<String> first(@NotNull String key);
 
     @NotNull List<String> all(@NotNull String key);
@@ -31,4 +37,8 @@ public interface HttpHeaders {
     @NotNull List<HttpHeader> allHeaders();
 
     boolean contains(@NotNull String key);
+
+    class Headers {
+        public static @NotNull HttpHeader CONTENT_TYPE = HttpHeader.create("", "");
+    }
 }
