@@ -13,12 +13,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public interface HttpRequest extends HttpMessage {
-    static @NotNull HttpRequest create(@NotNull RequestLine requestLine, @NotNull HttpHeaders headers, @Nullable HttpBody body) {
-        return new HttpRequestImpl(requestLine, headers, body);
-    }
-
-    static @NotNull HttpRequest create(@NotNull Method method, @NotNull URI uri, @NotNull HttpVersion version, @NotNull HttpHeaders headers, @Nullable HttpBody body) {
-        return new HttpRequestImpl(new RequestLine(method, uri, version), headers, body);
+    static @NotNull Builder builder() {
+        return new HttpRequestImpl.Builder();
     }
 
     @NotNull RequestLine getRequestLine();
@@ -52,4 +48,43 @@ public interface HttpRequest extends HttpMessage {
 
     @Override
     @Nullable HttpBody getBody();
+
+    interface Builder {
+
+        @NotNull Builder post();
+
+        @NotNull Builder get();
+
+        @NotNull Builder delete();
+
+        @NotNull Builder put();
+
+        @NotNull Builder patch();
+
+        @NotNull Builder head();
+
+        @NotNull Builder options();
+
+        @NotNull Builder trace();
+
+        @NotNull Builder connect();
+
+        @NotNull Builder uri(@NotNull String uri);
+
+        @NotNull Builder version(@NotNull HttpVersion version);
+
+        @NotNull Builder header(@NotNull String key, @NotNull String value);
+
+        @NotNull Builder header(@NotNull String key, @NotNull String @NotNull ... values);
+
+        @NotNull Builder headers(@NotNull HttpHeaders headers);
+
+        @NotNull Builder body(@NotNull HttpBody body);
+
+        @NotNull Builder body(@NotNull String body);
+
+        @NotNull Builder body(byte[] body);
+
+        @NotNull HttpRequest build();
+    }
 }
