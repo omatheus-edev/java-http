@@ -6,6 +6,10 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public interface HttpBody {
+    static @NotNull HttpBody empty() {
+        return new HttpBodyImpl(new byte[0]);
+    }
+
     static @NotNull HttpBody create(@NotNull String body) {
         return new HttpBodyImpl(body.getBytes(StandardCharsets.UTF_8));
     }
