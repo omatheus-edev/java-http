@@ -13,6 +13,10 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public interface HttpRequest extends HttpMessage {
+    static @NotNull HttpRequest create(@NotNull RequestLine requestLine, @NotNull HttpHeaders headers, @Nullable HttpBody body) {
+        return new HttpRequestImpl(requestLine, headers, body);
+    }
+
     static @NotNull Builder builder() {
         return new HttpRequestImpl.Builder();
     }
