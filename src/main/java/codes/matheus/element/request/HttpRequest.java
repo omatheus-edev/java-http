@@ -55,25 +55,23 @@ public interface HttpRequest extends HttpMessage {
 
     interface Builder {
 
-        @NotNull Builder post();
+        @NotNull Builder post(@NotNull String uri);
 
-        @NotNull Builder get();
+        @NotNull Builder get(@NotNull String uri);
 
-        @NotNull Builder delete();
+        @NotNull Builder delete(@NotNull String uri);
 
-        @NotNull Builder put();
+        @NotNull Builder put(@NotNull String uri);
 
-        @NotNull Builder patch();
+        @NotNull Builder patch(@NotNull String uri);
 
-        @NotNull Builder head();
+        @NotNull Builder head(@NotNull String uri);
 
-        @NotNull Builder options();
+        @NotNull Builder options(@NotNull String uri);
 
-        @NotNull Builder trace();
+        @NotNull Builder trace(@NotNull String uri);
 
-        @NotNull Builder connect();
-
-        @NotNull Builder uri(@NotNull String uri);
+        @NotNull Builder connect(@NotNull String uri);
 
         @NotNull Builder version(@NotNull HttpVersion version);
 

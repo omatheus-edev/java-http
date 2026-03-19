@@ -44,9 +44,9 @@ final class HttpRequestImpl implements HttpRequest {
 
     @Override
     public @NotNull String toString() {
-        return "HttpRequestImpl{" +
+        return "HttpRequest{" +
                 "requestLine=" + requestLine +
-                ", headers=" + headers +
+                ", headers=" + headers.allHeaders() +
                 ", body=" + (body != null ? body.asString() : "empty") +
                 '}';
     }
@@ -71,62 +71,65 @@ final class HttpRequestImpl implements HttpRequest {
         private @Nullable HttpBody body;
 
         @Override
-        public HttpRequest.@NotNull Builder uri(@NotNull String uri) {
+        public HttpRequest.@NotNull Builder post(@NotNull String uri) {
+            this.method = Method.POST;
             this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder post() {
-            this.method = Method.POST;
-            return this;
-        }
-
-        @Override
-        public HttpRequest.@NotNull Builder get() {
+        public HttpRequest.@NotNull Builder get(@NotNull String uri) {
             this.method = Method.GET;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder delete() {
+        public HttpRequest.@NotNull Builder delete(@NotNull String uri) {
             this.method = Method.DELETE;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder put() {
+        public HttpRequest.@NotNull Builder put(@NotNull String uri) {
             this.method = Method.PUT;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder patch() {
+        public HttpRequest.@NotNull Builder patch(@NotNull String uri) {
             this.method = Method.PATCH;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder head() {
+        public HttpRequest.@NotNull Builder head(@NotNull String uri) {
             this.method = Method.GET;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder options() {
+        public HttpRequest.@NotNull Builder options(@NotNull String uri) {
             this.method = Method.OPTIONS;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder trace() {
+        public HttpRequest.@NotNull Builder trace(@NotNull String uri) {
             this.method = Method.TRACE;
+            this.uri = URI.create(uri);
             return this;
         }
 
         @Override
-        public HttpRequest.@NotNull Builder connect() {
+        public HttpRequest.@NotNull Builder connect(@NotNull String uri) {
             this.method = Method.CONNECT;
+            this.uri = URI.create(uri);
             return this;
         }
 
@@ -157,18 +160,21 @@ final class HttpRequestImpl implements HttpRequest {
         @Override
         public HttpRequest.@NotNull Builder body(@NotNull HttpBody body) {
             this.body = body;
+            headers.set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(body.length()));
             return this;
         }
 
         @Override
         public HttpRequest.@NotNull Builder body(@NotNull String body) {
             this.body = HttpBody.create(body);
+            headers.set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(body.length()));
             return this;
         }
 
         @Override
         public HttpRequest.@NotNull Builder body(byte[] body) {
             this.body = HttpBody.create(body);
+            headers.set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(body.length));
             return this;
         }
 

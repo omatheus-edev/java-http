@@ -5,10 +5,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 final class HttpHeadersImpl implements HttpHeaders {
 
-    private final @NotNull Map<String, HttpHeader> headers = new HashMap<>();
+    private final @NotNull Map<String, HttpHeader> headers = new LinkedHashMap<>();
 
     @Override
     public @NotNull HttpHeaders add(@NotNull String key, @NotNull String value) {
@@ -79,5 +80,12 @@ final class HttpHeadersImpl implements HttpHeaders {
     @Override
     public boolean contains(@NotNull String key) {
         return headers.containsKey(key);
+    }
+
+    @Override
+    public @NotNull String toString() {
+        return headers.values().stream()
+                .map(HttpHeader::toString)
+                .collect(Collectors.joining(", "));
     }
 }

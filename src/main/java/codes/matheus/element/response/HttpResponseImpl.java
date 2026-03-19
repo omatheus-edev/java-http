@@ -44,7 +44,7 @@ final class HttpResponseImpl implements HttpResponse {
 
     @Override
     public String toString() {
-        return "HttpResponseImpl{" +
+        return "HttpResponse{" +
                 "version=" + version +
                 ", status=" + status +
                 ", headers=" + headers +
